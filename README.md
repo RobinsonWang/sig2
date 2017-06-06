@@ -1,3 +1,7 @@
 # sig2
-IDE: Eclipse Java EE
-Java web project template. Providing Struts2, Spring, Hibernate support. In order to make java-web programming easier.
+Java Web SSH framwork.
+
+##IDE:Eclipse for Java EE
+
+##Struts2 
+version: struts-2.3.32
