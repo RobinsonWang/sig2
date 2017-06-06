@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Home Page</title>
+<title>登录页面</title>
 </head>
 <body>
-	<h3>This is my home page.</h3>
+	<h3>请输入用户名和密码</h3>
 </body>
 </html>
