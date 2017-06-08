@@ -4,7 +4,80 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans  
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"> 
      
+    <!-- 定义数据源的信息 -->  
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"  
+        destroy-method="close">  
+        <property name="driverClass">  
+            <value>com.mysql.jdbc.Driver</value>  
+        </property>  
+        <property name="jdbcUrl">  
+            <value>jdbc:mysql://localhost:3306/sig</value>  
+        </property>  
+        <property name="user">  
+            <value>root</value>  
+        </property>  
+        <property name="password">  
+            <value>jenny@1988</value>  
+        </property>  
+        <property name="maxPoolSize">  
+            <value>80</value>  
+        </property>  
+        <property name="minPoolSize">  
+            <value>1</value>  
+        </property>  
+        <property name="initialPoolSize">  
+            <value>1</value>  
+        </property>  
+        <property name="maxIdleTime">  
+            <value>20</value>  
+        </property>  
+    </bean>   
+    
+    <!--定义Hibernate的SessionFactory -->  
+    <!-- SessionFactory使用的数据源为上面的数据源 -->  
+    <!-- 指定了Hibernate的映射文件和配置信息 -->  
+    <bean id="sessionFactory"  
+        class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">  
+        <property name="dataSource">  
+            <ref local="dataSource" />  
+        </property>
+        <property name="mappingResources">  
+	        <list>  
+	            <value>gov/pbc/model/Student.hbm.xml</value>  
+	        </list>  
+	    </property>  
+        <property name="hibernateProperties"> 
+        	<value>
+        		hibernate.dialect = org.hibernate.dialect.MySQLDialect
+        		show_sql = true
+        		hibernate.hbm2ddl.auto = update
+        	</value>  
+        </property>  
+    </bean>
+    
+    <bean id="transactionManager"  
+        class="org.springframework.orm.hibernate3.HibernateTransactionManager">  
+        <property name="sessionFactory" ref="sessionFactory" />  
+    </bean>
+    
+    
+    
+    <bean id="studentDAO" class="gov.pbc.dao.StudentDAOImpl">  
+        <property name="sessionFactory">  
+            <ref bean="sessionFactory" />  
+        </property>  
+    </bean>
+    
+    <bean id="studentService" class="gov.pbc.service.StudentServiceImpl">
+    	<property name="studentDAO">
+    		<ref bean="studentDAO"/>
+    	</property>
+    </bean>   
+     
 	<bean id="loginAction" class="gov.pbc.action.LoginAction" scope="prototype">
+		<property name="studentService">
+			<ref bean="studentService"/>
+		</property>
 	</bean>
      
 </beans>
