@@ -30,8 +30,8 @@ Hibernate
   新增hibernate.cfg.xml文件（在spring中整合hibernate后，该文件没有用，仅用作hibernate反向工程时使用）
   
   在spring中整合hibernate：定义数据源（使用c3p0），sessionFactory，需要注入的组件等。
-  
   
+  
 框架
-----------
+--------------
   分层：action model dao service
