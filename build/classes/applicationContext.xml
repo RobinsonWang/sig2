@@ -43,7 +43,8 @@
         </property>
         <property name="mappingResources">  
 	        <list>  
-	            <value>gov/pbc/model/Student.hbm.xml</value>  
+	            <value>gov/pbc/model/Student.hbm.xml</value>
+	            <value>gov/pbc/model/User.hbm.xml</value>
 	        </list>  
 	    </property>  
         <property name="hibernateProperties"> 
@@ -68,9 +69,18 @@
         </property>  
     </bean>
     
+    <bean id="userDAO" class="gov.pbc.dao.UserDAOImpl">  
+        <property name="sessionFactory">  
+            <ref bean="sessionFactory" />  
+        </property>  
+    </bean>
+    
     <bean id="studentService" class="gov.pbc.service.StudentServiceImpl">
     	<property name="studentDAO">
     		<ref bean="studentDAO"/>
+    	</property>
+    	<property name="userDAO">
+    		<ref bean="userDAO"/>
     	</property>
     </bean>   
      

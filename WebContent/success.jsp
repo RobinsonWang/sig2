@@ -4,17 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>用户登录</title>
+<title>success</title>
 </head>
 <body>
-	<form action="login" method="post">
-		UserName:<br>
-		<input type="text" name="username">
-		<br>
-		Password:<br>
-		<input type="text" name="password">
-		<br><br>
-		<input type="submit" value="Submit">
-	</form> 
+
 </body>
 </html>
