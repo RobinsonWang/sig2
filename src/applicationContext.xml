@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"  
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
-    xsi:schemaLocation="http://www.springframework.org/schema/beans  
-           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"> 
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+  	xmlns:aop="http://www.springframework.org/schema/aop"
+  	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+    
+    <!-- 开启常用注解处理器，切面的要单独开启，见下面 -->
+	<context:annotation-config />
+	<!-- 开启自动扫描，扫描路径由base-package属性指定 -->
+	<context:component-scan base-package="gov.pbc" />
+	<!-- 开启基于@AspectJ切面的注释处理器 -->
+	<aop:aspectj-autoproxy/>
      
     <!-- 定义数据源的信息 -->  
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"  
@@ -37,30 +53,40 @@
     <!-- SessionFactory使用的数据源为上面的数据源 -->  
     <!-- 指定了Hibernate的映射文件和配置信息 -->  
     <bean id="sessionFactory"  
-        class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">  
-        <property name="dataSource">  
-            <ref local="dataSource" />  
-        </property>
-        <property name="mappingResources">  
-	        <list>  
-	            <value>gov/pbc/model/Student.hbm.xml</value>
-	            <value>gov/pbc/model/User.hbm.xml</value>
-	        </list>  
-	    </property>  
-        <property name="hibernateProperties"> 
-        	<value>
-        		hibernate.dialect = org.hibernate.dialect.MySQLDialect
-        		show_sql = true
-        		hibernate.hbm2ddl.auto = update
-        	</value>  
-        </property>  
+        class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">  
+        <property name="dataSource" ref="dataSource" />
+        <!-- 设置自动扫描，这样就不用一一注册model的ORM映射了  -->
+		<property name="packagesToScan">
+			<list>
+				<value>gov.pbc.model</value>
+			</list>
+		</property>  
+        <!-- 设置Hibernate的相关属性 -->
+		<property name="hibernateProperties">
+			<props>
+			    <!-- 设置Hibernate的数据库方言 -->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<!-- 设置Hibernate是否在控制台输出SOL语句，开发调试阶段通常设置为true -->
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.current_session_context_class">thread</prop>
+				<prop key="hbm2ddl.auto">update</prop>
+				<prop key="hibernate.connection.release_mode">after_statement</prop>
+			</props>
+		</property> 
     </bean>
     
-    <bean id="transactionManager"  
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+    <bean id="txManager"  
         class="org.springframework.orm.hibernate3.HibernateTransactionManager">  
         <property name="sessionFactory" ref="sessionFactory" />  
     </bean>
     
+    <!-- 开启基于@Transactional注解方式的事务管理 -->
+    <tx:annotation-driven transaction-manager="txManager"/>
     
     
     <bean id="studentDAO" class="gov.pbc.dao.StudentDAOImpl">  
