@@ -3,6 +3,8 @@ package gov.pbc.action;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 import gov.pbc.model.Student;
@@ -10,8 +12,9 @@ import gov.pbc.model.User;
 import gov.pbc.service.StudentService;
 
 public class LoginAction extends ActionSupport{
-	private static final long serialVersionUID = 1L;
+	@Resource
 	private StudentService studentService;
+	
 	private String username;
 	private String password;
 	
@@ -31,10 +34,6 @@ public class LoginAction extends ActionSupport{
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public void setStudentService(StudentService studentService){
-		this.studentService = studentService;
 	}
 	  
     @Override

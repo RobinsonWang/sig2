@@ -88,32 +88,10 @@
     <!-- 开启基于@Transactional注解方式的事务管理 -->
     <tx:annotation-driven transaction-manager="txManager"/>
     
-    
-    <bean id="studentDAO" class="gov.pbc.dao.StudentDAOImpl">  
-        <property name="sessionFactory">  
-            <ref bean="sessionFactory" />  
-        </property>  
-    </bean>
-    
-    <bean id="userDAO" class="gov.pbc.dao.UserDAOImpl">  
-        <property name="sessionFactory">  
-            <ref bean="sessionFactory" />  
-        </property>  
-    </bean>
-    
-    <bean id="studentService" class="gov.pbc.service.StudentServiceImpl">
-    	<property name="studentDAO">
-    		<ref bean="studentDAO"/>
-    	</property>
-    	<property name="userDAO">
-    		<ref bean="userDAO"/>
-    	</property>
-    </bean>   
+    <bean id="loginAction" class="gov.pbc.action.LoginAction" scope="prototype"></bean>
+    <bean id="studentService" class="gov.pbc.service.StudentServiceImpl"></bean>
+    <bean id="userDAO" class="gov.pbc.dao.UserDAOImpl"></bean>
+    <bean id="studentDAO" class="gov.pbc.dao.StudentDAOImpl"></bean>
      
-	<bean id="loginAction" class="gov.pbc.action.LoginAction" scope="prototype">
-		<property name="studentService">
-			<ref bean="studentService"/>
-		</property>
-	</bean>
      
 </beans>

@@ -2,32 +2,19 @@ package gov.pbc.service;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import gov.pbc.dao.StudentDAO;
 import gov.pbc.dao.UserDAO;
 import gov.pbc.model.Student;
 import gov.pbc.model.User;
 
 public class StudentServiceImpl implements StudentService{
+	@Resource
 	private StudentDAO studentDAO;
+	@Resource
 	private UserDAO userDAO;
 	
-	public StudentDAO getStudentDAO() {
-		return studentDAO;
-	}
-
-	public void setStudentDAO(StudentDAO studentDAO) {
-		this.studentDAO = studentDAO;
-	}
-
-	public UserDAO getUserDAO() {
-		return userDAO;
-	}
-
-	public void setUserDAO(UserDAO userDAO) {
-		this.userDAO = userDAO;
-	}
-
-
 
 	public Student findById(int id){
 		return studentDAO.findById(id);

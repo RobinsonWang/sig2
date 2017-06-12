@@ -1,8 +1,21 @@
 package gov.pbc.dao;
 
+import java.util.List;
+
 public interface BasicDAO<T> {
-	public void save(T t);
-	public void update(T t);
-	public void delete(T t);
+	
+	public void save(T instance);
+	
+	public void update(T instance);
+	
+	public void delete(T instance);
+	
+	public T findById(int id);
+	
+	public List<T> findAll();
+	
+	public boolean isDESC();
+
+	public void setDESC(boolean DESC);
 
 }
