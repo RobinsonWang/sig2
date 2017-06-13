@@ -7,8 +7,8 @@
 	<constant name="struts.objectFactory" value="spring" />
 	<package name="default" namespace="/" extends="struts-default">
          <action name="login" method="login" class="loginAction">
-             <result name="success">/success.jsp</result>
-             <result name="fail">/fail.jsp</result>
+             <result name="success" type="redirect">/page/success.jsp</result>
+             <result name="fail" type="redirect">/page/fail.jsp</result>
          </action>
     </package>
 </struts>
