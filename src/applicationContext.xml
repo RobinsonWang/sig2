@@ -89,7 +89,9 @@
     <tx:annotation-driven transaction-manager="txManager"/>
     
     <bean id="loginAction" class="gov.pbc.action.LoginAction" scope="prototype"></bean>
+    <bean id="uploadAction" class="gov.pbc.action.UploadAction" scope="prototype"></bean>
     <bean id="loginService" class="gov.pbc.service.LoginServiceImpl"></bean>
+    <bean id="studentService" class="gov.pbc.service.StudentServiceImpl"></bean>
     <bean id="userDAO" class="gov.pbc.dao.UserDAOImpl"></bean>
     <bean id="studentDAO" class="gov.pbc.dao.StudentDAOImpl"></bean>
      

@@ -5,10 +5,17 @@
 <struts>
 	<!-- 告知Struts2运行时使用Spring来创建对象 -->
 	<constant name="struts.objectFactory" value="spring" />
-	<package name="default" namespace="/" extends="struts-default">
+	
+	<!-- 指定允许上传的文件最大字节数。默认值是2097152(2M) -->
+    <constant name="struts.multipart.maxSize" value="10701096"/>
+    <!-- 设置上传文件的临时文件夹,默认使用javax.servlet.context.tempdir -->
+    <constant name="struts.multipart.saveDir" value="/tmp" />
+	
+	<package name="default" extends="struts-default">
          <action name="login" method="login" class="loginAction">
-             <result name="success">/success.jsp</result>
+             <result name="success" type="redirect">/page/fileupload.jsp</result>
              <result name="fail">/fail.jsp</result>
          </action>
+         <action name="upload" method="fileupload" class="uploadAction"></action>
     </package>
 </struts>
