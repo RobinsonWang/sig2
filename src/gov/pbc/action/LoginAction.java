@@ -7,13 +7,12 @@ import javax.annotation.Resource;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import gov.pbc.model.Student;
 import gov.pbc.model.User;
-import gov.pbc.service.StudentService;
+import gov.pbc.service.LoginService;
 
 public class LoginAction extends ActionSupport{
 	@Resource
-	private StudentService studentService;
+	private LoginService loginService;
 	
 	private String username;
 	private String password;
@@ -45,17 +44,12 @@ public class LoginAction extends ActionSupport{
      
     //�����Զ��巽��
     public String login() {
-    	List<User> userList = studentService.findAll();
-    	User user = new User();
-    	Iterator<User> it = userList.iterator();
-    	while(it.hasNext()){
-    		user = it.next();
-    		if(username.trim().equals(user.getUsername()) && 
-    				password.trim().equals(user.getPassword())){
+    	List<User> userList = loginService.getUserByUsername(username);
+    	for(User user: userList){
+    		if(password.trim().equals(user.getPassword())){
     			return "success";
     		}
     	}
-    	
     	
         return "fail";
     }

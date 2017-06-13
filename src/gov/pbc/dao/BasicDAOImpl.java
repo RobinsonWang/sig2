@@ -91,6 +91,13 @@ public class BasicDAOImpl<T> implements BasicDAO<T> {
 
 	}
 	
+	public List<T> findByProperty(String propertyName, Object value) {
+		log.debug("finding  instance with property: " + propertyName + ", value: " + value);
+		String queryString = "from " + getTableName() + " as model where model." + propertyName + "= ?";
+		queryString = addOrderBy(queryString);
+		return hibernateTemplate.find(queryString, value);
+	}
+	
 	
 	private String getTableName() {
 		return entityClass.getSimpleName();

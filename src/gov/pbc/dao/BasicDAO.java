@@ -14,6 +14,8 @@ public interface BasicDAO<T> {
 	
 	public List<T> findAll();
 	
+	public List<T> findByProperty(String propertyName, Object value);
+	
 	public boolean isDESC();
 
 	public void setDESC(boolean DESC);
